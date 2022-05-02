@@ -13,7 +13,7 @@ class Main : Application() {
     //
     override fun onCreate() {
         super.onCreate()
-        serviceLocator = ServiceLocatorImpl()
+        serviceLocator = ServiceLocatorImpl(this)
     }
 }
 
