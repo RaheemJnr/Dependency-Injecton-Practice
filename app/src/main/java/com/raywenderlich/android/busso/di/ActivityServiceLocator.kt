@@ -1,16 +1,18 @@
 package com.raywenderlich.android.busso.di
 
-
-
 import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.ui.navigation.NavigatorImpl
-import java.lang.IllegalArgumentException
 
 const val NAVIGATOR = "Navigator"
 
-val activityServiceLocatorFactory:
-        ServiceLocatorFactory<AppCompatActivity> = { activity: AppCompatActivity ->
-    ActivityServiceLocator(activity)
+val activityServiceLocatorFactory: (ServiceLocator) ->
+ServiceLocatorFactory<AppCompatActivity> = { fallbackServiceLocator: ServiceLocator ->
+    { activity: AppCompatActivity ->
+        ActivityServiceLocator(activity).apply {
+            applicationServiceLocator = fallbackServiceLocator
+        }
+    }
+
 }
 
 class ActivityServiceLocator(private val activity: AppCompatActivity) : ServiceLocator {
