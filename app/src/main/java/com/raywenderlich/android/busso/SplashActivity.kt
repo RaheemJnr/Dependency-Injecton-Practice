@@ -36,23 +36,18 @@ package com.raywenderlich.android.busso
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.raywenderlich.android.busso.di.GEO_LOCATION_CHECKER
-import com.raywenderlich.android.busso.di.LOCATION_MANAGER
+import com.raywenderlich.android.busso.di.*
 import com.raywenderlich.android.location.api.model.LocationEvent
 import com.raywenderlich.android.location.api.model.LocationPermissionGranted
 import com.raywenderlich.android.location.api.model.LocationPermissionRequest
-import com.raywenderlich.android.location.api.permissions.GeoLocationPermissionChecker
-import com.raywenderlich.android.location.rx.provideRxLocationObservable
 import com.raywenderlich.android.ui.navigation.ActivityIntentDestination
 import com.raywenderlich.android.ui.navigation.Navigator
-import com.raywenderlich.android.ui.navigation.NavigatorImpl
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
@@ -72,16 +67,23 @@ class SplashActivity : AppCompatActivity() {
     private val handler = Handler()
     private val disposables = CompositeDisposable()
     private lateinit var locationObservable: Observable<LocationEvent>
+
+    //
+    private lateinit var activityServiceLocator: ServiceLocator
     private lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         makeFullScreen()
         setContentView(R.layout.activity_splash)
-        val locationManager: LocationManager = lookUp(LOCATION_MANAGER)
-        val permissionChecker: GeoLocationPermissionChecker = lookUp(GEO_LOCATION_CHECKER)
-        locationObservable = provideRxLocationObservable(locationManager, permissionChecker)
-        navigator = NavigatorImpl(this)
+        //
+        locationObservable = lookUp(LOCATION_OBSERVABLES)
+        //
+        activityServiceLocator = lookUp<ServiceLocatorFactory<AppCompatActivity>>(
+            ACTIVITY_LOCATOR_FACTORY
+        ).invoke(this)
+
+        navigator = activityServiceLocator.lookUp(NAVIGATOR)
     }
 
     override fun onStart() {
