@@ -42,7 +42,8 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.raywenderlich.android.busso.di.*
+import com.raywenderlich.android.busso.di.ServiceLocator
+import com.raywenderlich.android.busso.di.SplashActivityInjector
 import com.raywenderlich.android.location.api.model.LocationEvent
 import com.raywenderlich.android.location.api.model.LocationPermissionGranted
 import com.raywenderlich.android.location.api.model.LocationPermissionRequest
@@ -66,24 +67,26 @@ class SplashActivity : AppCompatActivity() {
 
     private val handler = Handler()
     private val disposables = CompositeDisposable()
-    private lateinit var locationObservable: Observable<LocationEvent>
+    lateinit var locationObservable: Observable<LocationEvent>
 
     //
     private lateinit var activityServiceLocator: ServiceLocator
-    private lateinit var navigator: Navigator
+    lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         makeFullScreen()
         setContentView(R.layout.activity_splash)
         //
-        locationObservable = lookUp(LOCATION_OBSERVABLES)
-        //
-        activityServiceLocator = lookUp<ServiceLocatorFactory<AppCompatActivity>>(
-            ACTIVITY_LOCATOR_FACTORY
-        ).invoke(this)
-
-        navigator = activityServiceLocator.lookUp(NAVIGATOR)
+//        locationObservable = activityServiceLocator.lookUp(LOCATION_OBSERVABLES)
+//        //
+//        activityServiceLocator = lookUp<ServiceLocatorFactory<AppCompatActivity>>(
+//            ACTIVITY_LOCATOR_FACTORY
+//        ).invoke(this)
+//
+//        navigator = activityServiceLocator.lookUp(NAVIGATOR)
+        // inject D instead of D lookUp
+        SplashActivityInjector.inject(this)
     }
 
     override fun onStart() {
