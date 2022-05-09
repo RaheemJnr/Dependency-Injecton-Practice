@@ -43,7 +43,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.raywenderlich.android.busso.di.ServiceLocator
-import com.raywenderlich.android.busso.di.SplashActivityInjector
+import com.raywenderlich.android.busso.di.injecter.SplashActivityInjector
 import com.raywenderlich.android.location.api.model.LocationEvent
 import com.raywenderlich.android.location.api.model.LocationPermissionGranted
 import com.raywenderlich.android.location.api.model.LocationPermissionRequest

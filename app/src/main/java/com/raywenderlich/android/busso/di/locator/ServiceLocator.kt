@@ -1,4 +1,4 @@
-package com.raywenderlich.android.busso.di
+package com.raywenderlich.android.busso.di.locator
 
 /**
  * Returns the object of type A bound to a specific name

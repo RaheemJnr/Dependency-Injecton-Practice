@@ -1,4 +1,4 @@
-package com.raywenderlich.android.busso.di
+package com.raywenderlich.android.busso.di.locator
 
 import android.annotation.SuppressLint
 import android.content.Context

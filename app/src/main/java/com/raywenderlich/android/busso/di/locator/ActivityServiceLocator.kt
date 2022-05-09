@@ -1,4 +1,4 @@
-package com.raywenderlich.android.busso.di
+package com.raywenderlich.android.busso.di.locator
 
 import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.ui.navigation.NavigatorImpl

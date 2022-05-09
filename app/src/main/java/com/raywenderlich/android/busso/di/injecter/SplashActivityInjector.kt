@@ -1,7 +1,8 @@
-package com.raywenderlich.android.busso.di
+package com.raywenderlich.android.busso.di.injecter
 
 import androidx.appcompat.app.AppCompatActivity
 import com.raywenderlich.android.busso.SplashActivity
+import com.raywenderlich.android.busso.di.locator.*
 import com.raywenderlich.android.busso.lookUp
 
 object SplashActivityInjector : Injector<SplashActivity> {
